@@ -1,0 +1,17 @@
+#dwd_review_info.job
+type=command
+command=sh ./dwd_review_info.sh  
+dependencies=ods_mysql_brand
+
+
+
+#失败job的自动重试次数
+retries=1
+#重试的间隔（毫秒）
+retry.backoff=300000
+
+
+#邮件发送
+#failure.emails=347466123@qq.com
+#success.emails=347466123@qq.com
+notify.emails=347466123@qq.com

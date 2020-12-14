@@ -1,0 +1,65 @@
+
+#===========  配置文件名模板  ==================
+
+#配置文件名.job
+type=command
+command=sh ./XXX.sh
+dependencies=xx
+
+
+#失败job的自动重试次数
+retries=1
+#重试的间隔（毫秒）
+retry.backoff=300000
+
+
+#邮件发送
+#failure.emails=347466123@qq.com
+#success.emails=347466123@qq.com
+notify.emails=347466123@qq.com
+
+
+#properties配置
+mail.sender=kekoray@163.com
+mail.host=smtp.163.com
+mail.user=kekoray@163.com
+mail.password=FUXNOBIAFPOKUWVA
+
+
+
+#-------------------------------------------------------------------
+
+
+
+#===========  指定Execute节点执行  ==================
+#---- azkaban_web_Flow Parameters ----
+	|      Name     |      Value     |
+	|  useExecutor  |   EXECUTOR_ID  |
+
+#在元数据库中执行sql,查看EXECUTOR_ID.
+select * from azkaban.executors;
+
+
+
+
+
+#===========  sh脚本动态传参  ==================
+
+#-- 1.command-sh.job --
+type=command
+param=${param_Key}
+command=sh ./test.sh "${param}"
+
+
+#-- 2.test.sh --
+#!/bin/bash
+echo param:$1 > /root/hello.txt
+
+
+#---- 3.azkaban_web_Flow Parameters ----
+	|    Name    |   Value   |
+	|  param_Key |   123456  |
+
+
+
+

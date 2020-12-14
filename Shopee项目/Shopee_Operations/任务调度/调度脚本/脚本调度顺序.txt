@@ -1,0 +1,143 @@
+
+
+# Date     :2020-11-10
+# Author   :koray
+# Company  :menglar
+# 脚本行尾序列 : LF
+
+source ./function_shopee.sh
+
+#########################################################
+
+
+捆绑调度
+
+	res_analysis_data_week.sh
+	year_same_week_date.sh   ---- 时间脚本
+
+ 
+
+shopee_operations_osd_cos
+cos的映射测试
+ 
+
+
+ods层映射
+	mysql:
+		#sys_all_level_category.sh
+		#sys_product_type.sh
+		#sync_shopee_pd_order.sh   ---  pd_order表是mengla_product库,需要改配置信息
+		#sync_product_type.sh
+	 
+
+	cos:
+ 		burying_point_log   ---- 埋点采集
+		login_buy_log       ---- 后端类目
+
+
+
+    
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################# 脚本调度顺序 ########################################
+
+
+1=>   login_buy_real  /  
+2=>    channel_change_data_day / channel_change_data_month / 
+channel_change_data_week / 
+
+1=>   login_buy_detail   
+2=>  channel_change_num / channel_change_total  / channel_res_num
+
+
+1=> (login_buy_log => login_buy_detail => login_buy_real)  login_buy_log
+
+
+login_buy_detail
+login_buy_real  => login_buy_total => login_buy_total (login_buy_overtime_change)
+
+--------------------------------------------------------------------
+
+sys_product_type
+login_buy_detail  => repurchase_analysis_data_week / repurchase_analysis_data_day / repurchase_analysis_data_month
+
+
+
+login_buy_detail  => repurchase_analysis_data_week / repurchase_analysis_details /  / 
+
+
+login_buy_detail
+login_buy_overtime_change =>  repurchase_num / repurchase_total
+
+
+login_buy_overtime_change => repurchase_over_num
+
+
+--------------------------------------------------------------------
+
+sys_all_level_category
+login_buy_detail => res_analysis_data_day (bs_res_analysis_data_day)  / res_analysis_data_month
+                    res_analysis_data_week   
+                
+                => res_analysis_cumulative
+
+
+
+
+res_analysis_data_day (bs_res_analysis_data_day) => res_analysis_cumulative (register_total)  
+
+
+
+
+sys_product_type => MySQL数据导入
+sys_all_level_category => MySQL数据导入
+
+
+
+
+
+login_buy_detail
+sys_product_type => user_liveness
+
+---------------------------------------------------------
+
+
+	=> sys_product_type / sys_all_level_category
+	
+
+	=> burying_point_log  / sync_shopee_pd_order.sh / login_buy_log
+
+	=> bs_channel_change_data_day
+
+
+	=>  login_buy_total / user_liveness / tj_page_count / tj_page_product_count / tj_use_time / tj_use_time_analysis / rpt_user_portrait_details
+	
+
+
+==============================================================================
+
+
+
+*1=>  login_buy_log  /  sys_all_level_category
+
+*2=> login_buy_total  /  channel_change_data_day / channel_change_data_month / channel_change_data_week / channel_change_num / channel_change_total  / channel_res_num 
+        repurchase_analysis_data_week / repurchase_analysis_details / repurchase_analysis_data_day / repurchase_analysis_data_month 
+        res_analysis_data_day / res_analysis_data_month
+                    res_analysis_data_week
+
+
+*3=> repurchase_num / repurchase_total / repurchase_over_num /  res_analysis_cumulative

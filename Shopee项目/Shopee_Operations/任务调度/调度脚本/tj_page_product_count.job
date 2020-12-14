@@ -1,0 +1,16 @@
+#tj_page_product_count.job
+type=command
+command=sh ./tj_page_product_count.sh
+dependencies=tj_page_count
+
+
+#失败job的自动重试次数
+retries=1
+#重试的间隔（毫秒）
+retry.backoff=300000
+
+
+#邮件发送
+#failure.emails=347466123@qq.com
+#success.emails=347466123@qq.com
+notify.emails=347466123@qq.com

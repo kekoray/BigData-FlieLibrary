@@ -1,0 +1,9 @@
+#end.job
+type=noop
+#dependencies=user_liveness,repurchase_analysis_details,rpt_user_portrait_details,repurchase_total,res_analysis_cumulative,tj_visit_analysis
+dependencies=rpt_user_portrait_details
+
+#邮件发送
+#failure.emails=347466123@qq.com
+#success.emails=347466123@qq.com
+notify.emails=347466123@qq.com

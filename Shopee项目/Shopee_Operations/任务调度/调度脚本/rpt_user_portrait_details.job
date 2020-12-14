@@ -1,0 +1,17 @@
+#rpt_user_portrait_details.job
+type=command
+command=sh ./rpt_user_portrait_details.sh
+#dependencies=sync_product_type,sync_shopee_pd_order
+dependencies=user_liveness,repurchase_analysis_details,repurchase_total,tj_visit_analysis,res_analysis_data_month
+
+
+#失败job的自动重试次数
+retries=1
+#重试的间隔（毫秒）
+retry.backoff=300000
+
+
+#邮件发送
+#failure.emails=347466123@qq.com
+#success.emails=347466123@qq.com
+notify.emails=347466123@qq.com

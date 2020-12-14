@@ -1,0 +1,6 @@
+#mr.job
+type=command
+command=sh ./mr.sh
+
+
+
